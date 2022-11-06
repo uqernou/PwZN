@@ -24,8 +24,8 @@ class Histogram:
         distinct_list = list(set(total_list))
         self.list_tuple = list((word, len(list(filter(lambda expresion: expresion == word, total_list)))) for word in distinct_list)
         self.list_tuple.sort(key=lambda tuples: tuples[1], reverse=True)
-        filtered_list = list(filter(lambda exp: len(str(exp[0])) >= int(self.min_number_of_letters), self.list_tuple))
-        return filtered_list[:int(self.numer_of_words)]
+        filtered_list = list(filter(lambda exp: len(str(exp[0])) >= self.min_number_of_letters, self.list_tuple))
+        return filtered_list[:self.numer_of_words]
 
     def pring_histogram(self):
         graph = Pyasciigraph()
