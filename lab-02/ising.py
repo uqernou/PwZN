@@ -53,7 +53,7 @@ class IsingMC:
         for i in range(len(self.mesh)):
             for j in range(len(self.mesh[i])):
                 spin_i = self.mesh[i][j]
-                self.H = self.H + utils.get_energy_neighbors(spin_i, self.mesh, i, j, self.n) - self.B * spin_i
+                self.H = self.H - self.J * utils.get_energy_neighbors(spin_i, self.mesh, i, j, self.n) - self.B * spin_i
 
     def calculate_magnetization(self):
         self.M = (1.0 / self.n ** 2) * utils.sum_spin(self.mesh)
@@ -72,9 +72,11 @@ class IsingMC:
             j_rand = random.randint(0, self.n - 1)
             spin_i = self.mesh[i_rand][j_rand]
             spin_rand = -1 * spin_i
-            E0 = 2 * utils.get_energy_neighbors(spin_i, self.mesh, i_rand, j_rand, self.n) - self.B * spin_i
-            E1 = 2 * utils.get_energy_neighbors(spin_rand, self.mesh, i_rand, j_rand, self.n) - self.B * spin_rand
-            dE = E0 - E1
+            E0 = - self.J * utils.get_energy_neighbors(spin_i, self.mesh, i_rand, j_rand,
+                                                           self.n) - self.B * utils.sum_spin(self.mesh)
+            E1 = - self.J * utils.get_energy_neighbors(spin_rand, self.mesh, i_rand, j_rand,
+                                                           self.n) - self.B * utils.sum_spin(self.mesh)
+            dE = E1 - E0
             if dE < 0.0:
                 self.mesh[i_rand][j_rand] = spin_rand
             elif utils.check_probability(self.beta, dE) == 1:

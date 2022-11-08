@@ -1,16 +1,18 @@
 import numpy
 import random
+
+import numpy as np
 from PIL import Image, ImageDraw
 
 
 def get_energy_neighbors(spin, arr, xi, yi, arr_len):
     max_xi = xi
     max_yi = yi
-    if xi + 1 == arr_len:
+    if xi - 1 == arr_len:
         max_xi = 0
-    if yi + 1 == arr_len:
+    if yi - 1 == arr_len:
         max_yi = 0
-    return 0.5 * (spin * arr[xi - 1][yi] +
+    return (spin * arr[xi - 1][yi] +
                   spin * arr[xi][max_yi] +
                   spin * arr[max_xi][yi] +
                   spin * arr[xi][yi - 1])
@@ -22,11 +24,7 @@ def check_probability(B, dE):
 
 
 def sum_spin(arr):
-    val = 0.0
-    for i in range(len(arr)):
-        for j in range(len(arr[i])):
-            val = val + arr[i][j]
-    return val
+    return np.sum(arr)
 
 
 def draw_mesh(arr, filename, n, imgs):
