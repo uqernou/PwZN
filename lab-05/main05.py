@@ -27,7 +27,8 @@ class WebScrapper:
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=self.option)
         self.driver.get("https://www.filmweb.pl/serial/Wikingowie-2013-659055")
         self.driver.find_element(By.XPATH, '//*[@id="didomi-notice-agree-button"]').click()
-        time.sleep(1)
+        time.sleep(4)
+        self.driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div/button').click()
         self.driver.execute_script('window.scrollTo(0,document.body.scrollHeight/10)')
         self.driver.find_element(By.XPATH, '//*[@id="site"]/div[4]/div[2]/div/div[2]/section/div/div/div[4]/div/div[1]/div/a[1]').click()
         self.ads = 0
